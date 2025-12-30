@@ -59,9 +59,9 @@ class Board:
             IndexError: if cell is outside the board
         """
         if state not in (0, 1):
-            raise ValueError("Cell values should be 0-1")
+            raise ValueError("W komorce musi byc wartosc 0-1")
         if not (0 <= row < self.rows) or not (0 <= col < self.cols):
-            raise IndexError("Cell is outside the board")
+            raise IndexError("Komorka jest poza plansza")
         self.matrix[row, col] = state
 
     def get_cell_value(self, row, col):
@@ -98,13 +98,13 @@ class Board:
         with open(file, 'r') as file_name:
             lines = file_name.readlines()
         if not lines:
-            raise ValueError("File is empty")
+            raise ValueError("Pusty plik")
         lines_length = len(lines[0].strip())
         for line in lines:
             if len(line.strip()) != lines_length:
-                raise ValueError("Wrong number of columns in the file")
+                raise ValueError("W pliku jest zla liczba kolumn")
             if any (symbol not in ('0', '1') for symbol in line.strip()):
-                raise ValueError("Wrong values in cells in the file")
+                raise ValueError("Nieprawidlowe wartosci komorek w pliku")
         
         file_rows = len(lines)
         self.rows = file_rows
@@ -138,7 +138,7 @@ class Board:
         """
 
         if not (0 <= density <= 1):
-            raise ValueError("Percent of alive cells should be 0-1")
+            raise ValueError("Prawdopodobienstwo wystapienia zywej komorki powinno byc z przedzialu 0-1")
         self.matrix = np.random.choice([0, 1], size=(self.rows, self.cols), p=[1-density, density])
         self.step_count = 0
 
@@ -167,7 +167,7 @@ class Board:
         """
 
         if not (0 <= row < self.rows) or not (0 <= col < self.cols):
-            raise IndexError("Cell is outside the board")
+            raise IndexError("Komorka jest poza plansza")
         number = 0
         for r in range(row - 1, row + 2):
             for c in range(col - 1, col + 2):
@@ -196,7 +196,7 @@ class Board:
     def __str__(self):
         """Returns a string version of the board"""
 
-        board_str = f"Step: {self.step_count}\n"
+        board_str = f"Krok: {self.step_count}\n"
         for row in range(self.rows):
             line = ''.join('*' if self.matrix[row, col] == 1 else ' ' for col in range(self.cols))
             board_str += line + '\n'

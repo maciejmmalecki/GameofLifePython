@@ -18,7 +18,7 @@ class Simulation:
         """
 
         if max_number_of_steps <= 0:
-            raise ValueError("Max number of steps should be a positive number")
+            raise ValueError("Maksymalna liczba krokow powinna byc liczba dodatnia")
         self.board = board
         self.stop_simulation = stop_simulation
         self.max_number_of_steps = max_number_of_steps

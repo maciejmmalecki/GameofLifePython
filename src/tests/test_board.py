@@ -139,7 +139,7 @@ class TestBoard(unittest.TestCase):
 
         self.board.set_cell_value(0, 0, 1)
         board_str = str(self.board)
-        self.assertIn("Step:", board_str)
+        self.assertIn("Krok:", board_str)
         self.assertIn(" ", board_str)
         self.assertIn("*", board_str)
 
