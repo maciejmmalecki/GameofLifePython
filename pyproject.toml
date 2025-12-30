@@ -9,7 +9,11 @@ description = "Conway's Game of Life simulation"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Dominika Lankiewicz"}, {"Maciej Małecki"}]
-dependencies = []
+dependencies = [
+    "matplotlib",
+    "pillow"
+    "numpy"
+]
 
 [project.scripts]
-GameofLifePython = "GameofLifePython.cli:main"
+GameofLifePython = "src.life:main"
