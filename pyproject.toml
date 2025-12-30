@@ -8,12 +8,17 @@ version = "0.1.0"
 description = "Conway's Game of Life simulation"
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [{name = "Dominika Lankiewicz"}, {"Maciej Małecki"}]
+authors = [{name = "Dominika Lankiewicz"}, {name = "Maciej Małecki"}]
 dependencies = [
     "matplotlib",
     "pillow"
-    "numpy"
 ]
 
 [project.scripts]
-GameofLifePython = "src.life:main"
+game-of-life = "life:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
