@@ -8,13 +8,25 @@ from game_of_life.board import Board
 from game_of_life.simulation import Simulation
 from game_of_life.simulation import Video
 
+
 class SimulationTest(unittest.TestCase):
 
+    """Class with tests for simulation
+    """
+
     def setUp(self):
+        
+        """Creates board
+        """
+
         self.board = Board(6,6)
         self.simulation = Simulation(self.board, max_number_of_steps=1000, stop_simulation=False)
 
     def test_initialization(self):
+        
+        """Test if simulation initializes correctly
+        """
+        
         s = Simulation(self.board, max_number_of_steps=25, stop_simulation=True)
         self.assertEqual(s.max_number_of_steps, 25)
         self.assertTrue(s.stop_simulation)
@@ -23,6 +35,9 @@ class SimulationTest(unittest.TestCase):
         self.assertFalse(s.loop)
     
     def test_initialization_parameters(self):
+
+        """Test default values in intialization
+        """
         
         s=Simulation(self.board)
         self.assertEqual(s.max_number_of_steps, 1000)
@@ -30,12 +45,19 @@ class SimulationTest(unittest.TestCase):
 
     def test_invalid_max_number_of_steps(self):
         
+
+        """Test wrong values of max_number_of_steps
+        """
+        
         with self.assertRaises(ValueError):
             Simulation(self.board, max_number_of_steps=-3)
         with self.assertRaises(ValueError):
             Simulation(self.board, max_number_of_steps=0)
     
     def test_empty_board(self):
+
+        """Test an empty board
+        """
         self.board.clear()
         s = Simulation(self.board, max_number_of_steps=15, stop_simulation=True)
         result = s.start_simulation()
@@ -45,6 +67,9 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['why'], 'empty')
 
     def test_stable_board(self):
+
+        """Test searching for a stable board
+        """
 
         self.board.set_cell_value(2,2,1)
         self.board.set_cell_value(2,3,1)
@@ -57,6 +82,9 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['why'], 'loop') 
 
     def test_loop_detection(self):
+
+        """Test searching for a loop
+        """
         
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)   
@@ -69,6 +97,10 @@ class SimulationTest(unittest.TestCase):
         self.assertLessEqual(s.where_is_loop, 3)
 
     def test_smoke(self):
+
+        """Test if simulation runs properly with board from a file
+        """
+
         filename = "test_smoke.txt"
         try:
             with open(filename, 'w') as file:
@@ -87,6 +119,9 @@ class SimulationTest(unittest.TestCase):
 
     def test_max_number_of_steps(self):
 
+        """Test reaching the maximum number of steps
+        """
+
         self.board = Board(5,5)
         self.board.set_cell_value(2, 2, 1)
         s = Simulation(self.board, max_number_of_steps=5, stop_simulation=False)
@@ -96,6 +131,9 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['step_count'], 5)
 
     def test_stop_simulation(self):
+
+        """Test topping the simulation
+        """
 
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)
@@ -107,6 +145,9 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['step_count'], 100)
 
     def test_simulation_step(self):
+
+        """Test one step in simulation
+        """
 
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)
@@ -124,6 +165,9 @@ class SimulationTest(unittest.TestCase):
 
     def test_copy_current_board(self):
 
+        """Test returning a copy of matrix
+        """
+
         self.board.set_cell_value(1,1,1)
         self.board.set_cell_value(1,2,1)
         s = Simulation(self.board, max_number_of_steps=10, stop_simulation=True)
@@ -131,6 +175,9 @@ class SimulationTest(unittest.TestCase):
         self.assertTrue(np.array_equal(np.array(copied), self.board.matrix))
 
     def test_is_loop(self):
+
+        """Test detecting loop before simulation and after
+        """
 
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)
@@ -141,6 +188,8 @@ class SimulationTest(unittest.TestCase):
         self.assertTrue(s.is_loop())
     
     def test_reset(self):
+        """Test reseting simulation
+        """
 
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)
@@ -157,6 +206,9 @@ class SimulationTest(unittest.TestCase):
     
     def test_results(self):
 
+        """Test if simulation returns dictionary with results properly
+        """
+
         self.board.set_cell_value(2,1,1)
         self.board.set_cell_value(2,2,1)
         self.board.set_cell_value(2,3,1)
@@ -170,11 +222,17 @@ class SimulationTest(unittest.TestCase):
 
     def test_record(self):
 
+        """Test if video simulation records properly and initializes one video frame
+        """
+
         video = Video(self.simulation)
         self.assertEqual(len(video.frames), 1)
         self.assertTrue(np.array_equal(video.frames[0], self.simulation.board.matrix))
     
     def test_record_frame(self):
+
+        """Test if simulation adds frames to video properly
+        """
 
         video = Video(self.simulation)
         self.board.set_cell_value(1,1,1)
@@ -187,6 +245,9 @@ class SimulationTest(unittest.TestCase):
                 break
     
     def test_video_run(self):
+
+        """Test recording frames and showing results
+        """
 
         video = Video(self.simulation)
         self.board.set_cell_value(2,1,1)
@@ -203,6 +264,8 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['step_count'], self.simulation.board.step_count)
 
     def test_get_number_of_frames(self):
+        """Test if method return correct number of frames
+        """
 
         video = Video(self.simulation)
         self.board.set_cell_value(1,1,1)
@@ -212,6 +275,9 @@ class SimulationTest(unittest.TestCase):
             self.assertEqual(video.get_number_of_frames(), x + 2)
     
     def test_copied_frames(self):
+
+        """Test whether previous frames did not change after doing next steps in simulation
+        """
 
         video = Video(self.simulation)
         self.board.set_cell_value(1,1,1)
@@ -224,10 +290,16 @@ class SimulationTest(unittest.TestCase):
     
     def test_empty_number_of_frames(self):
 
+        """Test whether a new video has only first initial frame
+        """
+
         video = Video(self.simulation)
         self.assertEqual(video.get_number_of_frames(), 1)
     
     def test_record_empty_board(self):
+
+        """Test recording an empty board
+        """
 
         self.board.clear()
         video = Video(self.simulation)
@@ -235,6 +307,9 @@ class SimulationTest(unittest.TestCase):
         self.assertTrue(continue_simulation)
         
     def test_cell(self):
+
+        """Test managing one alive cell
+        """
 
         board = Board(3, 3)
         board.set_cell_value(1, 1, 1)
@@ -246,20 +321,26 @@ class SimulationTest(unittest.TestCase):
         self.assertEqual(result['why'], 'loop')
 
     def test_large_max_number_of_steps(self):
+       
+        """Test what happens if maximum number of steps is really large
+        """
 
-       board = Board(5, 5)
-       board.set_cell_value(0, 1, 1)
-       board.set_cell_value(1, 2, 1)
-       board.set_cell_value(2, 0, 1)
-       board.set_cell_value(2, 1, 1)
-       board.set_cell_value(2, 2, 1)
-       s = Simulation(board, max_number_of_steps=20, stop_simulation=True)
-       result = s.start_simulation()
-       self.assertTrue(result['step_count'] <= 10000)
-       self.assertTrue(result['loop'] or result['step_count'] == 10000)
-       self.assertIn(result['why'], ['loop', 'max_number_of_steps'])
+        board = Board(5, 5)
+        board.set_cell_value(0, 1, 1)
+        board.set_cell_value(1, 2, 1)
+        board.set_cell_value(2, 0, 1)
+        board.set_cell_value(2, 1, 1)
+        board.set_cell_value(2, 2, 1)
+        s = Simulation(board, max_number_of_steps=20, stop_simulation=True)
+        result = s.start_simulation()
+        self.assertTrue(result['step_count'] <= 10000)
+        self.assertTrue(result['loop'] or result['step_count'] == 10000)
+        self.assertIn(result['why'], ['loop', 'max_number_of_steps'])
 
     def test_pattern_loop(self):
+
+        """Test searching for a loop
+        """
         
         board = Board(15, 15) 
 
