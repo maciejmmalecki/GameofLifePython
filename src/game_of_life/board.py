@@ -1,7 +1,8 @@
 import numpy as np
 
 class Board:
-    """This class represents the board in Conway's Game of Life
+
+    """This class represents the board in Conway's Game of Life.
     """
 
     def __init__(self, rows, cols):
