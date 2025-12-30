@@ -2,6 +2,8 @@ import numpy as np
 from typing import Set, Tuple
 
 class Simulation:
+    """Class which is responsible for managing the simulation
+    """
 
     def __init__(self, board, max_number_of_steps: int = 1000, stop_simulation: bool = True):
         """Initialize simulation
@@ -116,6 +118,9 @@ class Simulation:
         return np.copy(self.board.matrix)
 
 class Video:
+    
+    """Class which is responsible for recording frames
+    """
 
     def __init__(self, simulation: Simulation):
         """Initializes the video
