@@ -11,17 +11,29 @@ from game_of_life.board import Board
 
 class TestBoard(unittest.TestCase):
 
+    """Class containing tests for the board
+    """
+
     def setUp(self):
-        self.board = Board(5, 5)
+        
+        """Before each test setUp creates a board
+        """
+        self.board = Board(6, 6)
 
     def test_board_initialization(self):
 
-        self.assertEqual(self.board.rows, 5)
-        self.assertEqual(self.board.cols, 5)
+        """Responsible for testing the board initialization
+        """
+
+        self.assertEqual(self.board.rows, 6)
+        self.assertEqual(self.board.cols, 6)
         self.assertTrue(np.all(self.board.matrix == 0))
         self.assertEqual(self.board.step_count, 0)
 
     def test_random_board(self):
+        
+        """Test filling the board with random values
+        """
 
         self.board.random_board(density=0.5)
         self.assertEqual(self.board.step_count, 0)
@@ -29,12 +41,19 @@ class TestBoard(unittest.TestCase):
 
     def test_clear(self):
 
+        """Test clearing the board
+        """
+
         self.board.random_board()
         self.board.clear()
         self.assertTrue(np.all(self.board.matrix == 0))
         self.assertEqual(self.board.step_count, 0)
 
     def test_cell_value(self):
+
+
+        """Test setting values in cells
+        """
 
         self.board.set_cell_value(2, 3, 1)
         self.assertEqual(self.board.get_cell_value(2, 3), 1)
@@ -45,6 +64,9 @@ class TestBoard(unittest.TestCase):
 
     def test_count_alive_neighbours(self):
 
+        """A test to count how many cell neighbours are alive
+        """
+
         self.board.set_cell_value(1, 1, 1)
         self.board.set_cell_value(1, 2, 1)
         self.assertEqual(self.board.count_alive(1, 1), 1)
@@ -52,12 +74,18 @@ class TestBoard(unittest.TestCase):
 
     def test_copy(self):
 
+        """Test copy()
+        """
+
         self.board.set_cell_value(0, 0, 1)
         next_board = self.board.copy()
         self.assertTrue(np.array_equal(next_board.matrix, self.board.matrix))
         self.assertEqual(next_board.step_count, self.board.step_count)
 
-    def test_save_load_file(self):
+    def test_file(self):
+
+        """Test managing the file
+        """
 
         filename = "test_board.txt"
         self.board.set_cell_value(0, 0, 1)
@@ -68,6 +96,9 @@ class TestBoard(unittest.TestCase):
         os.remove(filename)
 
     def test_step(self):
+
+        """Test if step() works correctly
+        """
 
         self.board.set_cell_value(1, 0, 1)
         self.board.set_cell_value(1, 1, 1)
@@ -80,6 +111,9 @@ class TestBoard(unittest.TestCase):
 
     def test_is_stable(self):
 
+        """Test comparing the board with the previous one
+        """
+
         self.board.set_cell_value(1, 0, 1)
         self.board.set_cell_value(1, 1, 1)
         self.board.set_cell_value(1, 2, 1)
@@ -90,12 +124,18 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(self.board.is_stable(original))
 
     def test_is_empty(self):
+        
+        """Test of an empty board
+        """
 
         self.assertTrue(self.board.empty())
         self.board.set_cell_value(0, 0, 1)
         self.assertFalse(self.board.empty())
 
     def test_str(self):
+
+        """Test __str__()
+        """
 
         self.board.set_cell_value(0, 0, 1)
         board_str = str(self.board)
@@ -105,6 +145,9 @@ class TestBoard(unittest.TestCase):
 
     def test_change_to_from_tuple(self):
 
+        """Test changing a board to a tuple
+        """
+
         self.board.set_cell_value(0, 0, 1)
         tup = self.board.change_to_tuple()
         next_board = Board.from_tuple(tup)
@@ -113,6 +156,9 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.cols, next_board.cols)
 
     def test_wrong_file_format(self):
+
+        """Test with loading an incorrect file
+        """
 
         filename = "wrong_file.txt"
         with open(filename, 'w') as file:
