@@ -107,8 +107,7 @@ class Board:
                 raise ValueError("Wrong values in cells in the file")
         
         file_rows = len(lines)
-        if file_rows != self.rows:
-            raise ValueError("Wrong number of rows in the file")
+        self.rows = file_rows
         self.cols = lines_length
         self.matrix = np.zeros((self.rows, self.cols), dtype = int)
         for number_of_row, line in enumerate(lines):
