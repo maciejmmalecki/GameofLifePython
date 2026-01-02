@@ -1,3 +1,4 @@
+<!-- Kod wygenerowany z pomocą GitHub Copilot (AI) - dokumentacja projektu -->
 # GameofLifePython
 Podzial zadan:
 
