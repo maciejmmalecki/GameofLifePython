@@ -11,14 +11,16 @@ requires-python = ">=3.10"
 authors = [{name = "Dominika Lankiewicz"}, {name = "Maciej Małecki"}]
 dependencies = [
     "matplotlib",
-    "pillow"
+    "pillow",
+    "numpy"
 ]
 
 [project.scripts]
-game-of-life = "life:main"
+game-of-life = "game_of_life.life:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
