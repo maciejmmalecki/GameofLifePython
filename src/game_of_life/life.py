@@ -1,3 +1,16 @@
+"""Moduł główny do uruchamiania symulacji Gry w Życie Conwaya.
+
+Ten moduł zawiera funkcję główną programu, która:
+- Parsuje argumenty z linii poleceń
+- Wczytuje konfigurację planszy z pliku
+- Uruchamia symulację
+- Tworzy i zapisuje animację jako plik GIF
+
+Przykład użycia:
+    $ game-of-life config.txt
+    $ game-of-life config.txt --fps 15 --max-steps 1000
+"""
+
 import argparse
 import sys
 import matplotlib.pyplot as plt
@@ -6,6 +19,23 @@ from game_of_life.board import Board
 from game_of_life.simulation import Simulation, Video
 
 def main():
+    """Główna funkcja programu - uruchamia symulację Gry w Życie Conwaya.
+    
+    Funkcja:
+    1. Parsuje argumenty z linii poleceń (plik konfiguracyjny, fps, max-steps)
+    2. Wczytuje planszę z pliku konfiguracyjnego
+    3. Uruchamia symulację i zbiera wszystkie klatki
+    4. Tworzy animację matplotlib
+    5. Zapisuje animację jako plik GIF lub wyświetla w oknie (jeśli zapis się nie powiedzie)
+    
+    Argumenty z linii poleceń:
+        config_file (str): Ścieżka do pliku z układem początkowym planszy
+        --fps (int): Liczba klatek na sekundę dla animacji (domyślnie 10)
+        --max-steps (int): Maksymalna liczba kroków symulacji (domyślnie 500)
+    
+    Wyjście:
+        Tworzy plik 'simulation.gif' z animacją symulacji lub wyświetla animację w oknie.
+    """
     parser = argparse.ArgumentParser(description="Symulacja Gry w Życie Conwaya")
     parser.add_argument('config_file', help='Ścieżka do pliku konfiguracyjnego (układ planszy)')
     parser.add_argument('--fps', type=int, default=10, help='Klatki na sekundę dla animacji (domyślnie 10)')
@@ -33,6 +63,14 @@ def main():
     frames_data = result['frames']
 
     def animate(i):
+        """Funkcja rysująca pojedynczą klatkę animacji.
+        
+        Args:
+            i (int): Numer klatki do narysowania
+        
+        Rysuje i-tą klatkę symulacji jako obraz czarno-biały
+        i ustawia tytuł z numerem kroku.
+        """
         ax.clear()
         ax.imshow(frames_data[i], cmap='binary', origin='upper')
         ax.set_title(f'Krok {i}')
