@@ -27,15 +27,6 @@ class Simulation:
         self.previous_boards: Set[Tuple[Tuple[int,...],...]] = set()
         self.previous_boards.add(self.board.change_to_tuple())
 
-    def is_loop(self):
-        """Responsible for checking if there is a loop
-
-        Returns:
-            bool: it is True if there is a loop
-        """
-
-        return self.loop
-    
     def simulation_step(self):
 
         """Performs one step, changes board, finds the loop
@@ -159,7 +150,7 @@ class Video:
             why = 'unknown'
         return {
             'frames': self.frames,
-            'loop': self.simulation.is_loop(),
+            'loop': self.simulation.loop(),
             'step_count': self.simulation.board.step_count,
             'where_is_loop': self.simulation.where_is_loop,
             'board': self.simulation.board,

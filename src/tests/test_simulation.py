@@ -183,9 +183,9 @@ class SimulationTest(unittest.TestCase):
         self.board.set_cell_value(2,2,1)
         self.board.set_cell_value(2,3,1)
         s = Simulation(self.board, max_number_of_steps=10, stop_simulation=True)
-        self.assertFalse(s.is_loop())
+        self.assertFalse(s.loop())
         s.start_simulation()
-        self.assertTrue(s.is_loop())
+        self.assertTrue(s.loop())
     
     def test_reset(self):
         """Test reseting simulation
