@@ -15,6 +15,8 @@ git clone https://github.com/maciejmmalecki/GameofLifePython
 cd GameofLifePython
 python -m venv venv
 venv\Scripts\activate (windows)
+Jeżeli nie działa to najpierw wpisać:
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 pip install -e .
 pip install -r requirements.txt
 
