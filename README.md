@@ -11,15 +11,26 @@ zajecie sie uruchomieniem programu z linii polecen, zaimplementowanie kodu odpow
 Instalacja:
 - python co najmniej 3.10 lub nowsza wersja
 - pip install
+  
 git clone https://github.com/maciejmmalecki/GameofLifePython
+
 cd GameofLifePython
+
 python -m venv venv
+
 venv\Scripts\activate (windows)
+
 Jeżeli nie działa to najpierw wpisać:
+
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
 pip install -e .
+
 pip install -r requirements.txt
 
+
 Użycie:
+
 game-of-life config.txt
+
 game-of-life config.txt --fps 15 --max-steps 1000
