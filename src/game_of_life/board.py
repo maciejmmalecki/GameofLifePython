@@ -141,7 +141,17 @@ class Board:
             raise ValueError("Prawdopodobienstwo wystapienia zywej komorki powinno byc z przedzialu 0-1")
         self.matrix = np.random.choice([0, 1], size=(self.rows, self.cols), p=[1-density, density])
         self.step_count = 0
-       
+
+    def show_board(self):
+
+        """Prints the board
+        """
+        print(f"Step: {self.step_count}")
+        for row in range(self.rows):
+            line = ''.join('*' if self.matrix[row, col] == 1 else ' ' for col in range(self.cols))
+            print(line)
+        print("\n" + "-" * self.cols + "\n")
+        
 
     def count_alive(self, row, col):
         """Counts the alive neighbours
@@ -200,7 +210,29 @@ class Board:
         """
 
         return tuple(map(tuple, self.matrix))
-        
+    
+    def next_board(self):
+        """Returns the new board which represents the next step
+
+        Returns:
+            Board: new board
+        """
+
+        next_board = self.copy()
+        next_board.step()
+        return next_board
+    
+    def is_stable(self, previous_board) -> bool:
+        """Responsible for checking if the board is the same as in a previous state 
+
+        Args:
+            previous_board (Board): board in a previous state
+
+        Returns:
+            bool: It is true when boards are the same
+        """
+
+        return np.array_equal(self.matrix, previous_board.matrix)
     
     @classmethod
     def from_tuple(cls, state):

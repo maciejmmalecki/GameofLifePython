@@ -109,6 +109,20 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(self.board.get_cell_value(2, 1), 1)
         self.assertEqual(self.board.step_count, 1)
 
+    def test_is_stable(self):
+
+        """Test comparing the board with the previous one
+        """
+
+        self.board.set_cell_value(1, 0, 1)
+        self.board.set_cell_value(1, 1, 1)
+        self.board.set_cell_value(1, 2, 1)
+        original = self.board.copy()
+        self.board.step()
+        self.assertFalse(self.board.is_stable(original))
+        self.board.step()
+        self.assertTrue(self.board.is_stable(original))
+
     def test_is_empty(self):
         
         """Test of an empty board
